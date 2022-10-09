@@ -1,39 +1,46 @@
-import React from 'react';
+// import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from './freact';
 
 function TotoItem ({ value, id, dispatch }) {
-  console.log({value, id})
-  const [editMode, setEditMode] = React.useState(false)
-  const [editedValue, setEditValue] = React.useState(value)
+  const [editMode, setEditMode] = useState(false)
+  const [editedValue, setEditValue] = useState(value)
+  const inputRef = useRef(null)
+  
+  useEffect(() => {
+    if (editMode) {
 
-  React.useEffect(() => {
-    if (!editMode && editedValue !== value) {
+      // autofocus field when editing
+      setTimeout(() => inputRef.current?.focus(), 0)
+
+    } else if (editedValue !== value) {
+
       // commit changes if the value changed
       dispatch({ type: 'update', id, value: editedValue })
+
     }
   }, [editMode, value, editedValue, dispatch, id])
 
-  const textChange = React.useCallback((evt) => setEditValue(evt.target?.value), [])
+  const textChange = useCallback((evt) => setEditValue(evt.target?.value), [])
 
   return (
     <li>
       {editMode? (
-        <span>
-          <input type="text" value={editedValue} onInput={textChange}/>
+        <>
+          <input ref={inputRef} type="text" value={editedValue} onChange={textChange}/>
           <button onClick={() => setEditMode(false)}>Done</button>
           <button onClick={() => dispatch({ type: 'delete', id })}>Delete</button>
-        </span>
+        </>
       ) : (
-        <span>
+        <>
           {value}
           <button onClick={() => setEditMode(true)}>Edit</button>
-        </span>
+        </>
       )}
     </li>
   )
 }
 
-function listManager (items, action) {
-  console.log('listManager', items, action)
+function listReducer (items, action) {
   switch (action.type) {
     case 'create': {
       return [...items, { value: action.value, id: Date.now() }]
@@ -55,8 +62,7 @@ function listManager (items, action) {
 }
 
 export default function TodoList() {
-  const [items, dispatch] = React.useReducer(listManager, [])
-  const inputRef = React.useRef()
+  const [items, dispatch] = useReducer(listReducer, [])
 
   const submitEntry = ({ key, target }) => {
     const { value } = target
@@ -66,20 +72,13 @@ export default function TodoList() {
     }
   }
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      inputRef.current?.focus()
-    },0)
-  }, [items])
-
   return (
-    <div>
+    <>
       <h1>Todo List</h1>
-      <input ref={inputRef} placeholder='enter an item' onKeyDown={submitEntry}/>
+      <input placeholder='enter an item' onKeyDown={submitEntry} className="special"/>
       <ul>
         {items.map(item => <TotoItem {...item} dispatch={dispatch} key={item.id}/>)}
-        {/* {items.map(item => <li key={item.id}>{item.value}</li>)} */}
       </ul>
-    </div>
+    </>
   )
 }

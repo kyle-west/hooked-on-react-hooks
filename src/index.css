@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 50px;
@@ -8,7 +12,39 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
+input, button {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+  font-size: 16px;
+}
+
+input.special {
+  font-size: 20px;
+  padding: 10px !important;
+}
+
+input {
+  flex-grow: 1;
+}
+
+ul,
+input.special {
+  width: 100%;
+  max-width: 400px;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  border: 1px solid #1115;
+  border-radius: 8px;
+  margin: 8px 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li button {
+  margin-left: 10px;
 }
