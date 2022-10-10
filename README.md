@@ -6,7 +6,7 @@ This is part of a presentation I have where we explore the "under the hood" beha
 
 In order (because you can build new hooks from the previous ones)
 
-- `useRef`
+- `useRef` 
 - `useEffect`
 - `useMemo`
 - `useCallback`

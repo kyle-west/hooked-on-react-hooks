@@ -1,5 +1,5 @@
-// import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
-import { useCallback, useEffect, useReducer, useRef, useState } from './freact';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+// import { useCallback, useEffect, useReducer, useRef, useState } from './freact';
 
 function TotoItem ({ value, id, dispatch }) {
   const [editMode, setEditMode] = useState(false)

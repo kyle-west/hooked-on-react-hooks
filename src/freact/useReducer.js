@@ -1,3 +1,7 @@
+
+// USAGE:
+// const [state, dispatch] = useReducer(reducer, [], initFun)
+
 export default function useReducer(reducer, initialArg = {}, init) {
   // - Cache state with respect to the initialization params
   //   - If init and initialArg are both provided, store init(initialArg) as state
@@ -6,5 +10,6 @@ export default function useReducer(reducer, initialArg = {}, init) {
   //   - dispatch should have the signature of: (action) => void
   //   - reducer should have the signature of: (currentState, action) => newState
   //   - dispatch should also have a stable identity
+
   return [initialArg, () => {}]
 }
